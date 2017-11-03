@@ -1,4 +1,19 @@
 # Simple-SPA-Jquery-Bootstrap
+
 Simple assignment to divide string with space under the length of 100 characters
 
-CDN used for Jquery and Bootstrap so just download and use it.
+## Getting Started
+
+Its runnable on all modern browsers. Tested well on Google Chrome.
+
+### Prerequisites
+
+Nothing Actually, just your browser!
+
+## Authors
+
+* **Asjad Azeem**
+
+## Acknowledgments
+* **https://jquery.com/**
+* **https://getbootstrap.com**
