@@ -1,5 +1,9 @@
 ﻿.limiter {
     width: 800px;
-    height: 600px;
+    height: 500px;
     overflow-y: scroll;   
+}
+
+.count{
+    font-weight: bold;
 }

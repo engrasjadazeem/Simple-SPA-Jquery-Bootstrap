@@ -9,21 +9,36 @@ $(document).ready(function () {
         var remainingLength = rowLength;
         var row = "";
         var resultString = "";
+        var _hasPushed = false;
 
         //Traverse each word and fit it in row
         $.each(words, function (index, word) {
-            if(word.length <= remainingLength){
-                remainingLength = remainingLength - (word.length + 1);
-                if (index == 0) {
-                    row = word;
-                } else {
-                    row = row + " " + word;
-                }
+            if (word.length == 0) {
+                //Empty words case
+                words.pop(word);               
             } else {
-                //Row length fully utilized
-                remainingLength = rowLength;
+                if (word.length <= remainingLength) {
+                    remainingLength = remainingLength - (word.length + 1);
+                    if (index == 0 || _hasPushed) {
+                        row = word;
+                        _hasPushed = false;
+                    } else {
+                        row = row + " " + word;
+                    }
+                } else {
+                    //Row length fully utilized
+                    remainingLength = rowLength;
+                    rows.push(row);
+                    _hasPushed = true;
+                    row = "";
+                }
+            }
+
+            if (index == (words.length - 1) && _hasPushed == false) {
+                //Case to push the last string in row
+                //console.log("Last push.")
                 rows.push(row);
-                row = "";
+                _hasPushed = true;
             }
         });        
 
@@ -34,6 +49,7 @@ $(document).ready(function () {
 
         //Append result
         $('#paragraph').append(resultString);
+        $('#wordsCount').append("Words count: " + words.length);
 
         //console.log(rows);
 
