@@ -10,27 +10,31 @@ $(document).ready(function () {
         var row = "";
         var resultString = "";
         var _hasPushed = false;
-
+        var wordCount = 0;
         //Traverse each word and fit it in row
         $.each(words, function (index, word) {
-            if (word.length == 0) {
-                //Empty words case
-                words.pop(word);               
-            } else {
-                if (word.length <= remainingLength) {
+            if (word.length != 0) {                                
+                if ((word.length + 1) <= remainingLength) {
+                    wordCount++;
                     remainingLength = remainingLength - (word.length + 1);
-                    if (index == 0 || _hasPushed) {
-                        row = word;
-                        _hasPushed = false;
+                    if (index == 0) {
+                        row = word;                        
                     } else {
                         row = row + " " + word;
                     }
+                    _hasPushed = false;
                 } else {
                     //Row length fully utilized
                     remainingLength = rowLength;
                     rows.push(row);
                     _hasPushed = true;
-                    row = "";
+                    //Joining rows for final result
+                    resultString += row + "<br />";
+
+                    //Initialize row with the word
+                    remainingLength = remainingLength - (word.length + 1);
+                    row = word;
+                    wordCount++;
                 }
             }
 
@@ -38,18 +42,15 @@ $(document).ready(function () {
                 //Case to push the last string in row
                 //console.log("Last push.")
                 rows.push(row);
+                //Joining rows for final result
+                resultString += row + "<br />";
                 _hasPushed = true;
             }
         });        
 
-        //Joining rows for final result
-        $.each(rows, function (index, row) {
-            resultString += row + "<br />";            
-        });
-
         //Append result
         $('#paragraph').append(resultString);
-        $('#wordsCount').append("Words count: " + words.length);
+        $('#wordsCount').append("Words count: " + wordCount);
 
         //console.log(rows);
 
